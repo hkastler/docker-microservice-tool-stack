@@ -1,8 +1,8 @@
 version: '3'
 
 networks:
-  webnet:
-    driver: bridge
+ webnet:
+  driver: bridge
 
 services:
  jaeger:
@@ -23,28 +23,27 @@ services:
 
  prom:
   build: ./prometheus
-  
   command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
   ports:
-     - 9090:9090
+   - "9090:9090"
   depends_on:
-     - exporter
+   - exporter
   networks: 
-    - webnet
+   - webnet
 
  exporter:
-    image: prom/node-exporter:latest
-    ports:
+   image: prom/node-exporter:latest
+   ports:
      - "9100:9100"
-    networks: 
+   networks: 
     - webnet
 
  grafana:
-    image: grafana/grafana
-    ports:
-     - "4000:4000"
-    depends_on:
+   image: grafana/grafana
+   ports:
+    - "4000:4000"
+   depends_on:
     - prom
-    networks: 
+   networks: 
     - webnet
 
