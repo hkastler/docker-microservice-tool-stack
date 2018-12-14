@@ -22,9 +22,8 @@ services:
   hostname: "jaeger"
 
  prom:
-  image: prom/prometheus:latest
-  volumes:
-   - C:/etc/opt/text-analysis-project/prometheus.yml:/etc/prometheus/prometheus.yml
+  build: ./prometheus
+  
   command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
   ports:
      - 9090:9090
